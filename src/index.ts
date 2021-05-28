@@ -20,22 +20,6 @@ function isSqlObject(obj: unknown): obj is SqlObjBase {
   return (obj as SqlObj)?.[sqlObjControlsSymbol] !== undefined;
 }
 
-function isColumnsSqlObjectControl(obj: SqlObjControl): obj is SqlObjControl<SqlObjType.COLUMNS> {
-  return obj.type === SqlObjType.COLUMNS;
-}
-
-function isValuesSqlObjectControl(obj: SqlObjControl): obj is SqlObjControl<SqlObjType.VALUES> {
-  return obj.type === SqlObjType.VALUES;
-}
-
-function isSetSqlObjectControl(obj: SqlObjControl): obj is SqlObjControl<SqlObjType.SET> {
-  return obj.type === SqlObjType.SET;
-}
-
-function isWhereSqlObjectControl(obj: SqlObjControl): obj is SqlObjControl<SqlObjType.WHERE> {
-  return obj.type === SqlObjType.WHERE;
-}
-
 function escapeIdentifier(identifier: string) {
   return identifier
     .split('.')
@@ -58,19 +42,26 @@ function sqlObjectControl<T extends SqlObjType>(type: T) {
 }
 
 function mergeColumnsSqlObjects(dest: SqlObjControl, source: SqlObjControl<SqlObjType.COLUMNS>) {
-  const prefix = source.prefix || (isColumnsSqlObjectControl(dest) && dest.prefix);
+  const prefix =
+    source.prefix || (dest.type === SqlObjType.COLUMNS && (<SqlObjControl<SqlObjType.COLUMNS>>dest).prefix);
   source.text.forEach(txt => {
     if (txt === PREFIX_PLACEHOLDER) prefix && dest.text.push(prefix + '.');
     else dest.text.push(txt);
   });
 }
 
+const prefixByType: Partial<Record<SqlObjType, string>> = {
+  [SqlObjType.WHERE]: 'WHERE ',
+  [SqlObjType.SET]: 'SET ',
+  [SqlObjType.VALUES]: 'VALUES ',
+  [SqlObjType.UNNEST]: 'UNNEST(',
+};
+
 function mergeSqlObjects(dest: SqlObjControl, source: SqlObjControl) {
   if (source.isEmpty) return;
-  if (isWhereSqlObjectControl(source)) dest.text.push('WHERE ', ...source.text);
-  else if (isSetSqlObjectControl(source)) dest.text.push('SET ', ...source.text);
-  else if (isValuesSqlObjectControl(source)) dest.text.push('VALUES ', ...source.text);
-  else if (isColumnsSqlObjectControl(source)) mergeColumnsSqlObjects(dest, source);
+  const prefix = prefixByType[source.type];
+  if (prefix) dest.text.push(prefix);
+  if (source.type === SqlObjType.COLUMNS) mergeColumnsSqlObjects(dest, <SqlObjControl<SqlObjType.COLUMNS>>source);
   else dest.text.push(...source.text);
   dest.values.push(...source.values);
 }
@@ -94,7 +85,6 @@ function unnest(types: string[], rows: ValidArg[][]) {
   const sqlObj: UnnestSqlObj = {
     [sqlObjControlsSymbol]: control,
   };
-  control.text.push('UNNEST(');
   const stopWord = { [types.length - 1]: ')' }; // TODO: Figure out a better name
   types.forEach((type, i) => control.text.push(PLACEHOLDER, '::' + type + (stopWord[i] || ', ')));
   const values: ValidArg[][] = Array.from(types, () => []);

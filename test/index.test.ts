@@ -133,7 +133,6 @@ describe('basic queries', () => {
       col3: 'value3',
       col4: 'value4',
       col5: undefined,
-      hello_there: 12,
     })}`;
     expect(query.text).toEqual(`UPDATE table SET "col1" = $1, "col2" = $2, "col3" = $3, "col4" = $4`);
     expect(query.values).toEqual(['value1', 'value2', 'value3', 'value4']);
