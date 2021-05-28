@@ -1,0 +1,36 @@
+{
+  "name": "@heviir/pg-template-string",
+  "version": "1.0.0",
+  "description": "postgres ",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "repository": "github:henryv11/pg-template-string",
+  "homepage": "https://github.com/henryv11/pg-template-string",
+  "keywords": [
+    "postgres",
+    "template strings",
+    "query builder",
+    "pg",
+    "nodejs"
+  ],
+  "author": "h.viirmae@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^26.0.22",
+    "@typescript-eslint/eslint-plugin": "^4.21.0",
+    "@typescript-eslint/parser": "^4.21.0",
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1",
+    "ts-jest": "^26.5.5",
+    "typescript": "^4.2.3"
+  }
+}
