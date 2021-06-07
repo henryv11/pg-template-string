@@ -1,6 +1,6 @@
 {
   "name": "@heviir/pg-template-string",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "postgres ",
   "main": "dist/index.js",
   "scripts": {
