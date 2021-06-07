@@ -210,24 +210,24 @@ function sql(tempStrs: TemplateStringsArray, ...args: (ValidArg | SqlObjBase | u
   return sqlObj;
 }
 
-type ValidArg = string | number | boolean | Date | null;
+export type ValidArg = string | number | boolean | Date | null;
 
-type SqlObjControl<T extends SqlObjType = SqlObjType> = {
+export type SqlObjControl<T extends SqlObjType = SqlObjType> = {
   values: (ValidArg | ValidArg[])[];
   text: string[];
   readonly isEmpty: boolean;
   type: T;
 } & ExtraParams[T];
 
-type ExtraParamsMap = {
+export type ExtraParamsMap = {
   [SqlObjType.COLUMNS]: {
     prefix: string;
   };
 };
 
-type ExtraParams = ExtraParamsMap & Record<Exclude<SqlObjType, keyof ExtraParamsMap>, unknown>;
+export type ExtraParams = ExtraParamsMap & Record<Exclude<SqlObjType, keyof ExtraParamsMap>, unknown>;
 
-interface SqlObjBase<T extends SqlObjType = SqlObjType> {
+export interface SqlObjBase<T extends SqlObjType = SqlObjType> {
   [sqlObjControlsSymbol]: SqlObjControl<T>;
 }
 
