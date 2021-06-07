@@ -1,7 +1,5 @@
 import sql from '../src';
 
-sql`UPDATE table ${sql.set({ hey: 24, there: 25 })} ${sql.where`ghb = ${12}`.and`ggg = ${12}`}`;
-
 describe('set', () => {
   test('basics', () => {
     const query = sql`${'bljad'} ${sql.set({ hey: sql`hello there my little man ${45}`, hey2: 23 })}`;

@@ -117,7 +117,7 @@ function where(tempStrs?: TemplateStringsArray, ...args: (ValidArg | SqlObjBase 
 
 function set(keyValues: Record<string, ValidArg | SqlObj | undefined>) {
   const control = sqlObjectControl(SqlObjType.SET);
-  const sqlObj: UpdateSqlObj = {
+  const sqlObj: SetSqlObj = {
     [sqlObjControlsSymbol]: control,
     get isEmpty() {
       return control.isEmpty;
@@ -231,32 +231,32 @@ interface SqlObjBase<T extends SqlObjType = SqlObjType> {
   [sqlObjControlsSymbol]: SqlObjControl<T>;
 }
 
-interface SqlObj extends SqlObjBase<SqlObjType.MAIN> {
+export interface SqlObj extends SqlObjBase<SqlObjType.MAIN> {
   values: (ValidArg | ValidArg[])[];
   readonly text: string;
   append: (sql: (SqlObjBase | false | undefined)[]) => SqlObj;
   readonly isEmpty: boolean;
 }
 
-interface WhereSqlObj extends SqlObjBase<SqlObjType.WHERE> {
+export interface WhereSqlObj extends SqlObjBase<SqlObjType.WHERE> {
   and(tempStrs: TemplateStringsArray, ...args: (ValidArg | SqlObjBase | undefined)[]): WhereSqlObj;
   or(tempStrs: TemplateStringsArray, ...args: (ValidArg | SqlObjBase | undefined)[]): WhereSqlObj;
   readonly isEmpty: boolean;
 }
 
-interface ValuesSqlObject extends SqlObjBase<SqlObjType.VALUES> {
+export interface ValuesSqlObject extends SqlObjBase<SqlObjType.VALUES> {
   readonly isEmpty: boolean;
 }
 
-interface ColumnsSqlObject extends SqlObjBase<SqlObjType.COLUMNS> {
+export interface ColumnsSqlObject extends SqlObjBase<SqlObjType.COLUMNS> {
   readonly isEmpty: boolean;
   prefix(prefix: string): ColumnsSqlObject;
 }
 
-interface UpdateSqlObj extends SqlObjBase<SqlObjType.SET> {
+export interface SetSqlObj extends SqlObjBase<SqlObjType.SET> {
   readonly isEmpty: boolean;
 }
 
-interface IdentifierSqlObj extends SqlObjBase<SqlObjType.IDENTIFIER> {}
+export interface IdentifierSqlObj extends SqlObjBase<SqlObjType.IDENTIFIER> {}
 
-interface UnnestSqlObj extends SqlObjBase<SqlObjType.UNNEST> {}
+export interface UnnestSqlObj extends SqlObjBase<SqlObjType.UNNEST> {}
