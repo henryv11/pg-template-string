@@ -6,7 +6,7 @@ const PREFIX_PLACEHOLDER = '$';
 
 const sqlObjControlsSymbol = Symbol('controls');
 
-enum SqlObjType {
+export enum SqlObjType {
   MAIN,
   WHERE,
   SET,
