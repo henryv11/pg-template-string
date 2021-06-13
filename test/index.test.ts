@@ -103,6 +103,8 @@ describe('basic queries', () => {
     ])}`;
     expect(query.text).toEqual(`INSERT INTO table (col1, col2, col3) VALUES ($1, $2, $3), ($4, $5, $6), ($7, $8, $9)`);
     expect(query.values).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+    sql`${['']}`;
   });
 
   test('batch insert query with SELECT * FROM UNNEST ...', () => {

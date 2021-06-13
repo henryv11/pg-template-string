@@ -93,7 +93,7 @@ function unnest(types: string[], rows: ValidArg[][]) {
   return sqlObj;
 }
 
-function where(tempStrs?: TemplateStringsArray, ...args: (ValidArg | SqlObjBase | undefined)[]) {
+function where(tempStrs?: TemplateStringsArray, ...args: (ValidArg | ValidArg[] | SqlObjBase | undefined)[]) {
   const control = sqlObjectControl(SqlObjType.WHERE);
   const sqlObj: WhereSqlObj = {
     [sqlObjControlsSymbol]: control,
@@ -189,7 +189,7 @@ function identifier(str: string) {
   return sqlObj;
 }
 
-function sql(tempStrs: TemplateStringsArray, ...args: (ValidArg | SqlObjBase | undefined)[]) {
+function sql(tempStrs: TemplateStringsArray, ...args: (ValidArg | ValidArg[] | SqlObjBase | undefined)[]) {
   const control = sqlObjectControl(SqlObjType.MAIN);
   const sqlObj: SqlObj = {
     [sqlObjControlsSymbol]: control,
