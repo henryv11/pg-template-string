@@ -239,8 +239,8 @@ export interface SqlObj extends SqlObjBase<SqlObjType.MAIN> {
 }
 
 export interface WhereSqlObj extends SqlObjBase<SqlObjType.WHERE> {
-  and(tempStrs: TemplateStringsArray, ...args: (ValidArg | SqlObjBase | undefined)[]): WhereSqlObj;
-  or(tempStrs: TemplateStringsArray, ...args: (ValidArg | SqlObjBase | undefined)[]): WhereSqlObj;
+  and(tempStrs: TemplateStringsArray, ...args: (ValidArg | ValidArg[] | SqlObjBase | undefined)[]): WhereSqlObj;
+  or(tempStrs: TemplateStringsArray, ...args: (ValidArg | ValidArg[] | SqlObjBase | undefined)[]): WhereSqlObj;
   readonly isEmpty: boolean;
 }
 
