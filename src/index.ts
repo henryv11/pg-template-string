@@ -68,7 +68,7 @@ function mergeSqlObjects(dest: SqlObjControl, source: SqlObjControl) {
 
 function templateStringParserLoop(
   tempStrs: TemplateStringsArray,
-  args: (ValidArg | SqlObjBase | undefined)[] = [],
+  args: (ValidArg | ValidArg[] | SqlObjBase | undefined)[] = [],
   sqlObj: SqlObjControl,
 ) {
   for (let i = 0, currArg; i < tempStrs.length; i++) {
